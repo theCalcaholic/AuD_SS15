@@ -1,0 +1,153 @@
+\documentclass[fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{ulem}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{titlesec}
+
+\date{\gertoday}
+
+\lhead{\@author}
+\chead{}
+\rhead{\gertoday}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\setlength{\mathindent}{0pt}
+
+\usepackage[x11names, rgb]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{ulem}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage{boolexpr,pdftexcmds,trace}
+\makeatletter
+
+\usetikzlibrary{snakes,arrows,shapes}
+\newwrite\dotfile
+
+\begingroup
+  \catcode`\[ = 1\relax
+  \catcode`\] = 2\relax
+  \catcode`\{ = 12\relax
+  \catcode`\} = 12 \relax
+  \gdef\OpenBrace[{]
+  \gdef\CloseBrace[}]
+\endgroup
+
+% custom commands
+\newcommand{\leadingzero}[1]{\ifnum #1<10 0#1\else#1\fi}
+\newcommand{\gerdate}[3]{\leadingzero{#1}.\leadingzero{#2}.\leadingzero{#3}}
+\newcommand{\gertoday}{\gerdate{\the\day}{\the\month}{\the\year}}
+\newcommand*{\bfrac}[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\dotarrow}[0]{}
+
+\newenvironment{graphviz}[1]%
+{%
+\switch
+\case{\pdf@strcmp{#1}{graph}}
+    \renewcommand{\dotarrow}[0]{--}
+\case{\pdf@strcmp{#1}{strict graph}}
+    \renewcommand{\dotarrow}[0]{--}
+\case{\pdf@strcmp{#1}{digraph}}
+    \renewcommand{\dotarrow}[0]{->}
+\case{\pdf@strcmp{#1}{strict digraph}}
+    \renewcommand{\dotarrow}[0]{->}
+\endswitch
+
+\immediate\openout\dotfile=tmp.dot%
+\newcommand{\node}[2]{%
+\immediate\write\dotfile{##1 \dotarrow \OpenBrace##2\CloseBrace}%
+}%
+%
+\immediate\write\dotfile{#1 \OpenBrace}
+}%
+{\immediate\write\dotfile{\CloseBrace}%
+\immediate\closeout\dotfile%
+\immediate\write18{dot2tex --figonly tmp.dot > tmp.tex}%
+\input{tmp.tex}%
+}
+
+\setcounter{section}{2}
+\setcounter{subsection}{0}
+\pagestyle{fancy}
+
+\lhead{}
+\chead{}
+\rhead{\gertoday}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\setlength{\mathindent}{0pt}
+
+% document specific settings and formats
+% set consecutive page number
+\newcommand\pagenum{2}
+% set title (only change date)
+\title{Algorithmen \& Datenstrukturen - Aufgaben zum \\26. Oktober 2015 (Blatt \leadingzero{\pagenum})}
+% set authors
+\author{Tobias Knöppler}
+
+\renewcommand{\thesection}{\pagenum.\arabic{section}}
+\renewcommand{\thesubsection}{\arabic{section}. \alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsubsection})}
+\titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+
+\author{}
+\date{\gertoday}
+\begin{document}
+\maketitle
+
+\section{}
+\subsection{}%subsection name}\label{label}
+\begin{math}
+    \left(\lim\limits_{n \to \infty}\frac{3n^3 - 6n + 20}{n^3}\right)
+    ~=~ \left(\lim\limits_{n \to \infty}\frac{
+        3 - \frac{6}{n^2} + \frac{20}{n^3}
+    }{
+        1
+    }\right)
+    ~=~ 3 \\\\
+    \Rightarrow \text{Es existiert ein endlicher Limes > 0 für die Division der beiden Ausdrücke; d.h. $3n^3 - 6n + 20 \in O(n^3)$.}
+\end{math}
+
+\subsection{}%subsection name}\label{label}
+\begin{math}
+        \left(\lim\limits_{n \to \infty}\frac{
+            n^2 \cdot log n
+        }{
+            n^3
+        }\right)
+    ~=~ \left(\lim\limits_{n \to \infty}\frac{
+            1 \cdot \frac{log n}{n^2}
+        }{
+            n
+        }\right)
+    ~=~ \left(\lim\limits_{n \to \infty}\frac{
+            0
+        }{
+            0
+        }\right)
+\end{math}
+
+
+
+\end{document}
