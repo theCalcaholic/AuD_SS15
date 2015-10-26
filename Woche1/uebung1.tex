@@ -85,7 +85,7 @@
 \input{tmp.tex}%
 }
 
-\setcounter{section}{2}
+\setcounter{section}{0}
 \setcounter{subsection}{0}
 \pagestyle{fancy}
 
@@ -106,7 +106,7 @@
 \author{Tobias Knöppler}
 
 \renewcommand{\thesection}{\pagenum.\arabic{section}}
-\renewcommand{\thesubsection}{\arabic{section}. \alph{subsection})}
+\renewcommand{\thesubsection}{~~\arabic{subsection}.}
 \renewcommand{\thesubsubsection}{\roman{subsubsection})}
 \titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
 
@@ -119,35 +119,124 @@
 \section{}
 \subsection{}%subsection name}\label{label}
 \begin{math}
-    \left(\lim\limits_{n \to \infty}\frac{3n^3 - 6n + 20}{n^3}\right)
-    ~=~ \left(\lim\limits_{n \to \infty}\frac{
-        3 - \frac{6}{n^2} + \frac{20}{n^3}
-    }{
-        1
-    }\right)
+        \lim\limits_{n \to \infty}\left(
+            \frac{3n^3 - 6n + 20}{n^3}
+        \right)
+    ~=~ \lim\limits_{n \to \infty}\left(
+            \frac{
+                3 - \frac{6}{n^2} + \frac{20}{n^3}
+            }{
+                1
+            }
+        \right)
     ~=~ 3 \\\\
-    \Rightarrow \text{Es existiert ein endlicher Limes > 0 für die Division der beiden Ausdrücke; d.h. $3n^3 - 6n + 20 \in O(n^3)$.}
+    \Rightarrow \text{Es existiert ein endlicher Limes $> 0$ für die Division der beiden Ausdrücke;} \\
+    \text{d.h. $3n^3 - 6n + 20 \in O(n^3)$.}
 \end{math}
 
 \subsection{}%subsection name}\label{label}
 \begin{math}
-        \left(\lim\limits_{n \to \infty}\frac{
-            n^2 \cdot log n
-        }{
-            n^3
-        }\right)
-    ~=~ \left(\lim\limits_{n \to \infty}\frac{
-            1 \cdot \frac{log n}{n^2}
-        }{
-            n
-        }\right)
-    ~=~ \left(\lim\limits_{n \to \infty}\frac{
-            0
-        }{
-            0
-        }\right)
+        \lim\limits_{n \to \infty}\left(
+            \frac{
+                n^2 \cdot log ~ n
+            }{
+                n^3
+            }
+        \right)
+    ~=~ \lim\limits_{n \to \infty}\left(
+            \frac{
+                1 \cdot \frac{log ~ n}{n^2}
+            }{
+                n
+            }
+        \right)
+    ~=~ \lim\limits_{n \to \infty}\left(
+            \frac{log ~ n}{n^3}
+        \right)
+    ~\stackrel{H}{=}~ \lim\limits_{n \to \infty}\left(
+            \frac{
+                \frac{1}{n \cdot ln 10}
+            }{
+                3n^2
+            }
+        \right)
+    ~=~ \lim\limits_{n \to \infty}\left(
+            \frac{
+                1
+            }{
+                3n^3 \cdot ln 10
+            }\right)
+    ~=~ \infty \\\\
+    \Rightarrow \text{Es existiert kein endlicher Limes; d.h. $n^2 \cdot log ~ n \notin O(n^3) \rightarrow n^2 \cdot log ~ n \notin O(n^3) \cap \Omega(n^2)$.}
 \end{math}
 
+\section{}%section name}\label{label}
+\subsection{}%subsection name}\label{label}
+$log ~ n$ $<$ $ln ~ n$ $<$ 4 $<$ 1000 $<$ $\sqrt{n}^3 ~=~ n^\frac{1}{3}$ $<$ $n^{\frac{1}{2}}$ $<$ $n$ $<$ $n^2$ $<$ $2^n$ \\
+\\
+Anmerkung: $<$ drückt hier lediglich eine Ordnung aus, nicht "kleiner/gleich".\\
+\\
+Begründung:\\
+$log ~ n \in O(ln ~ n)$, da $\lim\limits_{n \to \infty}
+        \left(
+            \frac{(log ~ n)'}{(ln ~ )'}
+        \right)
+    ~=~ \lim\limits_{n \to \infty}
+        \left(
+            \frac{
+                \left(\frac{1}{2n}\right)}{
+                \left(\frac{1}{n}\right)
+            }
+        \right)
+    ~=~ \frac{1}{10} ~=~ 0,1 < \infty$ \\
+$ln ~ n < O(4)$, da $\lim\limits_{n \to \infty}
+        \left(
+            \frac{(ln ~ n)'}{4'}
+        \right)
+    ~=~ \lim\limits_{n \to \infty}
+        \left(
+            \frac{1}{1 \cdot n}
+        \right)
+    ~=~ 0 < \infty$ \\
+$4 \in O(1000)$, da $\lim\limits_{n \to \infty}
+        \left(
+            \frac{4}{1000}
+        \right)
+    ~=~ 0,004 < \infty$ \\
+$1000 \in O(\sqrt{n}^3)$, da $\lim\limits_{n \to \infty}
+    \left(
+        \frac{(1000)}{n^\frac{1}{3}}
+    \right)
+    ~=~ 0 < \infty$\\
+$\sqrt{n}^3 \in O(n^\frac{1}{2})$, da $n^\frac{1}{3} < n^\frac{1}{2} ~~ \forall n \in \R \text{ mit $n > 0$}$\\
+$n^\frac{1}{2} \in O(n)$, da $n^\frac{1}{2} < n ~~ \forall n \in \R \text{ mit $n > 0$}$\\
+$n \in O(n^2)$, da $n < n^2 ~~ \forall n \in \R \text{ mit $n > 0$}$\\
+$n^2 \in 2^n$, da 
+\begin{math}
+    \lim\limits_{n \to \infty}
+        \left(
+            \frac{(n^2)'}{e^{ln ~ 2 \cdot n}}
+        \right)
+    ~=~ \lim\limits_{n \to \infty}
+        \left(
+            \frac{2n}{ln ~ 2 \cdot e^{ln ~ 2 \cdot n}}
+        \right)
+    ~=~ \lim\limits_{n \to \infty}
+        \left(
+            \frac{2}{1 \cdot e^{ln ~ 2 \cdot n} + ln ~ 2 \cdot ln ~ 2 \cdot e^{ln ~ 2 \cdot n}}
+        \right)\\
+    ~=~ \lim\limits_{n \to \infty}
+        \left(
+            \frac{2}{(1 + (ln ~ 2)^2) e^{ln ~ 2 \cdot n}}
+        \right)
+    ~=~ \frac{2}{1 + (ln ~ 2)^2} \cdot \lim\limits_{n \to \infty}
+        \left(
+            \frac{1}{e^(ln ~ 2 \cdot n)}
+        \right)
+    ~=~ \frac{2}{1 + (ln ~ 2)^2} < \infty
+\end{math}
+
+Ausdrücke gleicher Äquivalenzklassen:\\
 
 
 \end{document}
