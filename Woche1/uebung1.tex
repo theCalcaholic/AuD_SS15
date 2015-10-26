@@ -107,7 +107,7 @@
 
 \renewcommand{\thesection}{\pagenum.\arabic{section}}
 \renewcommand{\thesubsection}{~~\arabic{subsection}.}
-\renewcommand{\thesubsubsection}{\roman{subsubsection})}
+\renewcommand{\thesubsubsection}{\alph{subsubsection})}
 \titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
 
 
@@ -235,8 +235,51 @@ $n^2 \in 2^n$, da
         \right)
     ~=~ \frac{2}{1 + (ln ~ 2)^2} < \infty
 \end{math}
+\\
+\\
+\\
+Funktionen gleicher Äquivalenzklassen:\\
 
-Ausdrücke gleicher Äquivalenzklassen:\\
+
+\section{}%section name}\label{label}
+\begin{math}
+    f(n), g(n) \in O(h(n)) \\\\
+    \Rightarrow \exists n_0, c ~ (\forall n_{n > n_0} ~ f(n) \leq h(n) \cdot c) 
+    \wedge \exists n_0', c' ~ (\forall n_{n > n_0'} ~ g(n) \leq h(n) \cdot c')
+    \\
+    \Rightarrow \forall n > max(n_0, n_0') ~ (f(n) \cdot g(h) \leq (h(n) \cdot c) \cdot (h(n) \cdot c'))
+    \\
+    \Rightarrow \forall n > max(n_0, n_0') ~ (f(n) \cdot g(h) \leq h(n) \cdot 2 \cdot c \cdot c')
+    \\\\
+    \Rightarrow f(n) \cdot g(n) \in O(h(n))
+\end{math}
+
+\section{}%section name}\label{label}
+\subsection{}%section name}\label{label}
+\begin{math}
+    T(n) := \left\{ \bfrac{
+        0, ~~~~~~~~~ \text{für n = 0}
+    }{
+        3 \cdot T(n - 1) + 2, ~~ \text{sonst}
+    }\right.
+\end{math}
+\subsubsection{}%subsubsection name}\label{label}
+\begin{flalign*}
+    T(n) &= 3T(n-1) + 2\\
+    &= 3(3T(n-2) + 2) + 2 = 9T(n-2) + 6 + 2\\
+    &= 27 T(n-3) + 18 + 6 + 2\\
+    &= ...\\
+    &= 3^k T(n-k) + 3^{k-1} + 3^{k-2} + ... + 2^1 + 2^0 ~~ (*)
+\end{flalign*}
+\\
+(*)\\
+\textbf{I) Induktionsanfang:}\
+\emph{Behauptung:} $(\exists n)$\\
+\emph{Beweis:} \\\\
+\textbf{II) Induktionsschritt:}\\
+\emph{Induktionsvorraussetzung (IV):} $(\forall n)$\\
+\emph{Beweis:}
+
 
 
 \end{document}
