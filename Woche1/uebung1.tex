@@ -111,7 +111,7 @@
 \titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
 
 
-\author{}
+\author{Tobias Knöppler (6523815), Nico Tress (6378086)}
 \date{\gertoday}
 \begin{document}
 \maketitle
@@ -239,7 +239,23 @@ $n^2 \in 2^n$, da
 \\
 \\
 Funktionen gleicher Äquivalenzklassen:\\
-
+\\
+$log ~ n \in \Theta(ln ~ n)$, da $log ~ n \in O(ln ~ n)$ (siehe oben) und da\\
+\begin{math}
+    \lim\limits_{n \to \infty}
+    \left(
+        \frac{ln ~ n}{log ~ n}
+    \right)
+    \stackrel{\text{H}}{\Rightarrow} \lim\limits_{n \to \infty}
+    \left(
+        \frac{2n}{n}
+    \right)
+    = 2 < \infty \Rightarrow ln ~ n \in O(log ~ n)
+\end{math}\\\\
+$4 \in \Theta(1000)$, da $4 \in O(1000)$ (siehe oben) und $\lim\limits_{n \to \infty}
+    \left(
+        \frac{1000}{4}
+    \right) = 250 < \infty \Rightarrow 1000 \in O(4)$
 
 \section{}%section name}\label{label}
 \begin{math}
@@ -263,22 +279,42 @@ Funktionen gleicher Äquivalenzklassen:\\
         3 \cdot T(n - 1) + 2, ~~ \text{sonst}
     }\right.
 \end{math}
-\subsubsection{}%subsubsection name}\label{label}
 \begin{flalign*}
     T(n) &= 3T(n-1) + 2\\
     &= 3(3T(n-2) + 2) + 2 = 9T(n-2) + 6 + 2\\
-    &= 27 T(n-3) + 18 + 6 + 2\\
+    &= 9(3T(n-3) + 2) + 6 + 2 = 27 T(n-3) + 18 + 6 + 2\\
     &= ...\\
-    &= 3^k T(n-k) + 3^{k-1} + 3^{k-2} + ... + 2^1 + 2^0 ~~ (*)
+    &= 3^k T(n-k) + 2 \cdot 3^{k-1} + 2 \cdot 3^{k-2} + ... + 2 \cdot 3^1 + 2 \cdot 3^0 ~~ (*)
 \end{flalign*}
 \\
 (*)\\
 \textbf{I) Induktionsanfang:}\
-\emph{Behauptung:} $(\exists n)$\\
-\emph{Beweis:} \\\\
+\emph{Behauptung:} $A ~:=~ \exists n ~ (T(n) = 3^k T(n-k) + 2 \cdot 3^{k-1} + ... + 2 \cdot 3^0$\\
+\emph{Beweis:} $T(n) = 3T(n-1) + 2 = 3^1 T(n-1) + 2 \cdot 3^0$\\\\
 \textbf{II) Induktionsschritt:}\\
-\emph{Induktionsvorraussetzung (IV):} $(\forall n)$\\
-\emph{Beweis:}
+\emph{Induktionsvorraussetzung (IV):} $\forall n ~ A(n) \Rightarrow A(n+1)$\\
+\emph{Beweis:}\\\\
+\begin{math}
+    ...
+\end{math}
+
+\subsection{}%subsection name}\label{label}
+
+\begin{flalign}
+    S(n) := \left\{ \bfrac{
+        c, ~~~~~~~~~ \text{für n = 1}
+    }{
+        16 \cdot S(\frac{n}{4}) + n^2, ~~ \text{sonst}
+    }\right.
+\end{flalign}
+\begin{math}
+    (I) ~ log_4(16) = 2\\\\
+    (II) ~ n^2 \in \Theta(n^{log_4(16)} = n^2)
+    \Rightarrow T(n) \in \Theta(n^{log_4(16)} \cdot log_2(n)) \\
+    \Rightarrow T(n) \in \Theta(n^2 \cdot log_2(n))
+\end{math}
+
+
 
 
 
