@@ -85,7 +85,7 @@
 \input{tmp.tex}%
 }
 
-\setcounter{section}{2}
+\setcounter{section}{0}
 \setcounter{subsection}{0}
 \pagestyle{fancy}
 
@@ -117,6 +117,18 @@
 \maketitle
 
 \section{}%section name}\label{label}
-$ALGO1() \in O(2n^2)$, da 
+$ALGO1()$: Da die beiden inneren Schleifen für jeden Durchlauf der äußeren je n mal durchlaufen werden (also 2n zusammen) und die äußere Schleife n+1 mal durchlaufen wird. daraus folgt $ALGO1() \in O((n+1) * 2n) = O(2n^2 + 2n)$.\\
+\\
+$ALGO2()$: Da die äußere Schleife bis 2n läuft, i aber jeweils um 2 inkrementiert wird, wird die while-Schleife n mal durchlaufen. Die innere Schleife wird jeweils i mal ausgeführt, also insgesamt \[\sum\limits_{i=1}^n 2i = 1 + 3 + 5 + ... + 2n-3 + 2n-1 = 2n + 2n + ... + 3 - 3 + 1 - 1 = (2n)^{n-1}\] mal...\\
+\\
+$ALGO3()$: Die äußere Schleife wird genau $\sqrt{n}$ mal ausgeführt. Die innere Schleife wird jeweils sooft durchlaufen, wie n durch 2 geteilt werden kann, ohne dass eine Zahl kleiner oder gleich 1 resultiert. Dies entspricht dem Exponenten der zu n nächstgrößeren 2er-Potenz.
+Daraus folgt für eine Zweierpotenz a mit $a > n, (a - n)$ so klein, wie möglich: $a = 2^x => ln(a) = x \cdot ln(2) => x = \frac{ln(a)}{ln(2)} = \frac{10}{7} \cdot ln(a) => ALGO3() \in O(\sqrt{n} \cdot \lceil \frac{10}{7} \cdot ln(n) \rceil)$
+
+\section{}%section name}\label{label}
+
+\begin{flalign}
+T(x) := \left\{ 1 &, wenn n < 4 \\
+          3 + 3n + 2 \cdot T(\frac{n}{4})\right.
+\end{flalign}
 
 \end{document}
