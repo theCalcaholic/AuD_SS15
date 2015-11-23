@@ -10,6 +10,27 @@
 \usepackage{comment}
 \usepackage{enumerate}
 \usepackage{titlesec}
+\usepackage{listings}
+
+\lstset{
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\bfseries\ttfamily\color{orange},
+  stringstyle=\color{green}\ttfamily,
+  commentstyle=\color{middlegray}\ttfamily,
+  emph={square}, 
+  emphstyle=\color{blue}\texttt,
+  emph={[2]root,base},
+  emphstyle={[2]\color{yac}\texttt},
+  showstringspaces=false,
+  flexiblecolumns=false,
+  tabsize=2,
+  numbers=left,
+  numberstyle=\tiny,
+  numberblanklines=false,
+  stepnumber=1,
+  numbersep=6pt,
+  xleftmargin=15pt
+}
 
 \date{\gertoday}
 
@@ -106,12 +127,12 @@
 \author{Tobias Knöppler}
 
 \renewcommand{\thesection}{\pagenum.\arabic{section}}
-\renewcommand{\thesubsection}{\arabic{section}. \alph{subsection})}
+\renewcommand{\thesubsection}{~~\arabic{subsection}.}
 \renewcommand{\thesubsubsection}{\roman{subsubsection})}
 \titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
 
 
-\author{}
+\author{Tobias Knöppler (6523815), Nico Tress (6378086)}
 \date{\gertoday}
 \begin{document}
 \maketitle
@@ -119,16 +140,178 @@
 \section{}%section name}\label{label}
 $ALGO1()$: Da die beiden inneren Schleifen für jeden Durchlauf der äußeren je n mal durchlaufen werden (also 2n zusammen) und die äußere Schleife n+1 mal durchlaufen wird. daraus folgt $ALGO1() \in O((n+1) * 2n) = O(2n^2 + 2n)$.\\
 \\
-$ALGO2()$: Da die äußere Schleife bis 2n läuft, i aber jeweils um 2 inkrementiert wird, wird die while-Schleife n mal durchlaufen. Die innere Schleife wird jeweils i mal ausgeführt, also insgesamt \[\sum\limits_{i=1}^n 2i = 1 + 3 + 5 + ... + 2n-3 + 2n-1 = 2n + 2n + ... + 3 - 3 + 1 - 1 = (2n)^{n-1}\] mal...\\
-\\
+$ALGO2()$: Da die äußere Schleife bis 2n läuft, i aber jeweils um 2 inkrementiert wird, wird die while-Schleife n mal durchlaufen. Die innere Schleife wird jeweils i mal ausgeführt, also insgesamt 
+\begin{math}
+  1 + 3 + 5 + ... + 2n-3 + 2n-1 = \sum\limits_{i=1}^n 2i - 1\\
+  = 2n-1 + 2n-3 + ... + 4-1 + 2-1\\
+  = 2n + 2n + ... + 4-1-3 + 2-1-1\\
+  = \left\{\bfrac{
+    (n-1) \cdot 2n \qquad\qquad \text{für gerade n}
+  }{
+    2n + (n-2) \cdot 2(n-1) ~ \text{für ungerade n}
+  }\right.\\
+  = \left\{\bfrac{
+    2n^2-2n \qquad~~ \text{für gerade n}
+  }{
+    2n + 2n^2 - 8n + 4 ~ \text{für ungerade n}
+  }\right.\\
+  = \left\{\bfrac{
+    2n^2-2n \qquad~~ \text{für gerade n}
+  }{
+    2n^2 - 6n + 4 ~ \text{für ungerade n}
+  }\right.\\
+\end{math}
+ mal...\\
+ Damit gilt $ALGO2() \in O(2n^2 - 6n + 4) \in O(2n^2)$.\\
+ \\
 $ALGO3()$: Die äußere Schleife wird genau $\sqrt{n}$ mal ausgeführt. Die innere Schleife wird jeweils sooft durchlaufen, wie n durch 2 geteilt werden kann, ohne dass eine Zahl kleiner oder gleich 1 resultiert. Dies entspricht dem Exponenten der zu n nächstgrößeren 2er-Potenz.
 Daraus folgt für eine Zweierpotenz a mit $a > n, (a - n)$ so klein, wie möglich: $a = 2^x => ln(a) = x \cdot ln(2) => x = \frac{ln(a)}{ln(2)} = \frac{10}{7} \cdot ln(a) => ALGO3() \in O(\sqrt{n} \cdot \lceil \frac{10}{7} \cdot ln(n) \rceil)$
 
 \section{}%section name}\label{label}
 
-\begin{flalign}
-T(x) := \left\{ 1 &, wenn n < 4 \\
-          3 + 3n + 2 \cdot T(\frac{n}{4})\right.
-\end{flalign}
+Dies ist eine Rekurrenzgleichung für den Algorithmus FUNC(A):\\
+\begin{math}
+T(x) := \left\{ \bfrac{1, \qquad~~~ wenn~n < 4}
+          {5 + 3n + 2 \cdot T(\frac{n}{4}) ~~ sonst}\right.
+\end{math}
+\\\\
+Sie ergibt sich daraus, dass bei einer Eingabegröße (Länge von A) $< 4$ lediglich 5 zurückgegeben wird; die Komplexität ist also 1.\\
+Ansonsten gilt (für $n = \text{A.länge}$):
+\begin{itemize}
+    \item 5 'einfache' Anweisungen werden unabhängig von der Eingabe ausgeführt (Zeilen 4, 7, 10 und der Zuweisungsanteil in den Zeilen 8 und 9).
+    \item Die beiden for-Schleifen werden beide je A.länge mal durchlaufen; die erste enthält eine; die zweite 2 Anweisungen, daraus ergibt sich eine Komplexität von $3 \cdot n$.
+    \item FUNC ruft sich selbst zweimal mit je einem Viertel des Arrays auf, daraus ergibt sich eine Komplexität von $2 \cdot T(n/4)$
+\end{itemize}
 
+\section{}%section name}\label{label}
+\subsection{}%subsection name}\label{label}
+
+\begin{math}
+    T_2(n) := \left\{\bfrac{
+        c_1, \qquad\qquad~~ \text{für n=1}
+    }{
+        8 \cdot T_1\left(\frac{n}{2}\right) + d_1 \cdot n^3 \qquad \text{sonst}
+    }\right.
+\end{math}\\
+
+daraus folgt nach dem Mastertheorem:\\
+
+\begin{flalign*}
+    a &= 8\\
+    b &= 2\\
+    f(n) &= d_1 \cdot n^3\\
+    \rightarrow log_b(a) &= log_2(8) = 3
+    \\
+    \Rightarrow T_2(n) &\in \Theta(n^3 \cdot log_2(n))\text{, da } f(n) = d_1 \cdot n^3 \in \Theta(n^3)
+\end{flalign*}
+
+\subsection{}%subsection name}\label{label}
+\begin{math}
+    T_2(n) := \left\{\bfrac{
+        c_2, \qquad\qquad~~ \text{für n=1}
+    }{
+        5 \cdot T_2\left(\frac{n}{4}\right) + d_2 \cdot n^2 \qquad \text{sonst}
+    }\right.
+\end{math}
+
+\begin{flalign*}
+    a &= 5\\
+    b &= 4\\
+    f(n) &= d_2 \cdot n^2\\
+    \rightarrow log_b(a) &= log_4(5) = \frac{log(5)}{log(4} \approx 1,161
+    \\
+    \Rightarrow T_2(n) &\in \Theta(f(n)) \rightarrow T_2(n) \in \Theta(d_2 \cdot n^2)
+    \text{, da } f(n) \in \Omega(n^{log_4(5) + \epsilon}) \text{ z.B. für } \epsilon = 1 \\
+    \qquad \text{ wegen } 
+        &\lim\limits_{n \rightarrow \infty}\left(\frac{
+            d_2 \cdot n^2
+        }{
+            n^{1,161 + 1}
+        }\right)\\
+        = &\lim\limits_{n \rightarrow \infty}\left(\frac{
+            d_2
+        }{
+            n^{0,161}
+        }\right) = 0
+\end{flalign*}
+
+\subsection{}%subsection name}\label{label}
+\begin{math}
+    T_3(n) := \left\{\bfrac{
+        c_3, \qquad\qquad~~ \text{für n=1}
+    }{
+        6 \cdot T_3\left(\frac{n}{3}\right) + d_3 \cdot n \cdot log(n) \qquad \text{sonst}
+    }\right.
+\end{math}
+
+\begin{flalign*}
+    a &= 6\\
+    b &= 3\\
+    f(n) &= d_3 \cdot n \cdot log(n)\\
+    \rightarrow log_b(a) &= log_3(6) = \frac{log(6)}{log(3} \approx 1,631
+    \\
+    \Rightarrow T_3(n) &\in \Theta(f(n)) \rightarrow T_2(n) \in \Theta(d_2 \cdot n^2)
+    \text{, da } f(n) \in \Omega(n^{log_4(5) + \epsilon}) \text{ z.B. für } \epsilon = 1 \\
+    \qquad \text{ wegen } 
+        &\lim\limits_{n \rightarrow \infty}\left(\frac{
+            d_3 \cdot n \cdot log(n)
+        }{
+            n^{1,631}
+        }\right)\\
+        = &\lim\limits_{n \rightarrow \infty}\left(\frac{
+            d_3 \cdot log(n)
+        }{
+            n^{0,631}
+        }\right)\\
+        \stackrel{H}{=} &\lim\limits_{n \rightarrow \infty}\left(
+            \frac{d_3}{n}
+        \cdot 
+            \frac{n^{-0,369}}{0,631}
+        \right)\\
+        = &\lim\limits_{n \rightarrow \infty}\left(
+            \frac{d_3 \cdot n^{0,369}}{0,631 \cdot n}
+        \right)\\
+        = &\lim\limits_{n \rightarrow \infty}\left(
+            \frac{
+                d_3 \cdot n^{0,369}
+            }{
+                0,631 \cdot n
+            }
+        \right)\\
+        = &\lim\limits_{n \rightarrow \infty}\left(
+            \frac{
+                d_3
+            }{
+                0,631 \cdot n^{0,631}
+            }
+        \right)\\
+        = &0
+\end{flalign*}
+
+\section{}%section name}\label{label}
+\subsection{}%subsection name}\label{label}
+
+\begin{lstlisting}
+merge(A, B):
+  O = empty list
+  while A is not empty and B is not empty:
+    if A[0] < B[0]:
+      append A[0] to O
+      remove A[0]
+    else
+      append B[0] to O
+      remove B[0]
+    if A is empty
+      return concat(O, B)
+\end{lstlisting}
+
+\subsection{}%subsection name}\label{label}
+
+\begin{lstlisting}
+numberOfConflicts(A)
+  pendMax = 0
+  numConflicts = 0
+  for i=1 to A.length
+    
+\end{lstlisting}
 \end{document}
