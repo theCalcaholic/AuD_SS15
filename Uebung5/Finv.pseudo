@@ -1,0 +1,29 @@
+Findv(t, s, V)
+  for each n in V
+    n.counter = 0
+    n.color = white
+  
+  for each n in adjacents(s)
+    CheckPath(n, t)
+  
+  
+CheckPath(n, t)
+  n.color = black
+  
+  if t in adjacents(n)
+    n.counter = n.counter + 1
+    return n
+
+  maxCounterNode = n
+  
+  n.color = grey
+  for each m in adjacents(n) with n.color != grey
+    o = CheckPath(m, t)
+    if(o.counter > maxCounterNode)
+      maxCounterNode = o
+  n.color = black // or white?
+      
+  if not maxCounterNode == n
+    n.counter = n.counter + 1
+  
+  return maxCounterNode

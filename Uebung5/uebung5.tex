@@ -1,0 +1,101 @@
+\documentclass[fleqn]{article}
+\usepackage[x11names, rgb]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{tikz}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{ulem}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage{boolexpr,pdftexcmds,trace}
+\makeatletter
+
+\usetikzlibrary{snakes,arrows,shapes}
+\newwrite\dotfile
+
+\begingroup
+  \catcode`\[ = 1\relax
+  \catcode`\] = 2\relax
+  \catcode`\{ = 12\relax
+  \catcode`\} = 12 \relax
+  \gdef\OpenBrace[{]
+  \gdef\CloseBrace[}]
+\endgroup
+
+% custom commands
+\newcommand{\leadingzero}[1]{\ifnum #1<10 0#1\else#1\fi}
+\newcommand{\gerdate}[3]{\leadingzero{#1}.\leadingzero{#2}.\leadingzero{#3}}
+\newcommand{\gertoday}{\gerdate{\the\day}{\the\month}{\the\year}}
+\newcommand*{\bfrac}[2]{\genfrac{}{}{0pt}{}{#1}{#2}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\dotarrow}[0]{}
+
+\newenvironment{graphviz}[1]%
+{%
+\switch
+\case{\pdf@strcmp{#1}{graph}}
+    \renewcommand{\dotarrow}[0]{--}
+\case{\pdf@strcmp{#1}{strict graph}}
+    \renewcommand{\dotarrow}[0]{--}
+\case{\pdf@strcmp{#1}{digraph}}
+    \renewcommand{\dotarrow}[0]{->}
+\case{\pdf@strcmp{#1}{strict digraph}}
+    \renewcommand{\dotarrow}[0]{->}
+\endswitch
+
+\immediate\openout\dotfile=tmp.dot%
+\newcommand{\node}[2]{%
+\immediate\write\dotfile{##1 \dotarrow \OpenBrace##2\CloseBrace}%
+}%
+%
+\immediate\write\dotfile{#1 \OpenBrace}
+}%
+{\immediate\write\dotfile{\CloseBrace}%
+\immediate\closeout\dotfile%
+\immediate\write18{dot2tex --figonly tmp.dot > tmp.tex}%
+\input{tmp.tex}%
+}
+
+\setcounter{section}{0}
+\setcounter{subsection}{0}
+\pagestyle{fancy}
+
+\lhead{Tobias Knöppler}
+\chead{}
+\rhead{\gertoday}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\setlength{\mathindent}{0pt}
+
+% document specific settings
+%\renewcommand{\thesection}{}
+\renewcommand{\thesubsection}{\arabic{section}. \alph{subsection})}
+\renewcommand{\thesubsubsection}{\roman{subsubsection})}
+\titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
+
+\title{ALA - Hausaufgaben zum 8. Mai 2014 (Blatt 04)}
+\author{}
+\date{\gertoday}
+\begin{document}
+\maketitle
+
+\section{}
+\textbf{I) Induktionsanfang:}\
+\emph{Behauptung:} $(\exists n)$\\
+\emph{Beweis:} \\\\
+\textbf{II) Induktionsschritt:}\\
+\emph{Induktionsvorraussetzung (IV):} $(\forall n)$\\
+\emph{Beweis:}
+
+
+
+\end{document}
