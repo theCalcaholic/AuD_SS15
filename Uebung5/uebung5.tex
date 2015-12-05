@@ -1,4 +1,57 @@
 \documentclass[fleqn]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{lipsum}
+\usepackage{ulem}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{parallel}
+
+\lstset{
+  basicstyle=\scriptsize\ttfamily,
+  keywordstyle=\bfseries\ttfamily\color{orange},
+  stringstyle=\color{green}\ttfamily,
+  commentstyle=\color{middlegray}\ttfamily,
+  emph={square}, 
+  emphstyle=\color{blue}\texttt,
+  emph={[2]root,base},
+  emphstyle={[2]\color{yac}\texttt},
+  showstringspaces=false,
+  flexiblecolumns=false,
+  tabsize=2,
+  numbers=left,
+  numberstyle=\tiny,
+  numberblanklines=false,
+  stepnumber=1,
+  numbersep=6pt,
+  xleftmargin=15pt,
+  literate=%
+    {Ö}{{\"O}}1
+    {Ä}{{\"A}}1
+    {Ü}{{\"U}}1
+    {ß}{{\ss}}1
+    {ü}{{\"u}}1
+    {ä}{{\"a}}1
+    {ö}{{\"o}}1
+    {~}{{\textasciitilde}}1
+}
+
+\date{\gertoday}
+
+\lhead{\@author}
+\chead{}
+\rhead{\gertoday}
+\lfoot{}
+\cfoot{\thepage}
+\rfoot{}
+\setlength{\mathindent}{0pt}
+
 \usepackage[x11names, rgb]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage{tikz}
@@ -15,7 +68,8 @@
 \usepackage{boolexpr,pdftexcmds,trace}
 \makeatletter
 
-\usetikzlibrary{snakes,arrows,shapes}
+\tikzset{>=latex} 
+\usetikzlibrary{snakes,arrows,shapes,positioning}
 \newwrite\dotfile
 
 \begingroup
@@ -35,7 +89,6 @@
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Q}{\mathbb{Q}}
-\newcommand{\Z}{\mathbb{Z}}
 \newcommand{\dotarrow}[0]{}
 
 \newenvironment{graphviz}[1]%
@@ -68,7 +121,7 @@
 \setcounter{subsection}{0}
 \pagestyle{fancy}
 
-\lhead{Tobias Knöppler}
+\lhead{}
 \chead{}
 \rhead{\gertoday}
 \lfoot{}
@@ -76,26 +129,335 @@
 \rfoot{}
 \setlength{\mathindent}{0pt}
 
-% document specific settings
-%\renewcommand{\thesection}{}
-\renewcommand{\thesubsection}{\arabic{section}. \alph{subsection})}
+% document specific settings and formats
+% set consecutive page number
+\newcommand\pagenum{5}
+% set title (only change date)
+\title{Algorithmen \& Datenstrukturen - Aufgaben zum \\7. Dezember 2015 (Blatt \leadingzero{\pagenum})}
+% set authors
+\author{Tobias Knöppler}
+
+\renewcommand{\thesection}{\pagenum.\arabic{section}}
+\renewcommand{\thesubsection}{~~\arabic{subsection}.}
 \renewcommand{\thesubsubsection}{\roman{subsubsection})}
 \titleformat{\subsubsection}[runin]{\normalfont\normalsize\bfseries}{\thesubsubsection}{1em}{}
 
-\title{ALA - Hausaufgaben zum 8. Mai 2014 (Blatt 04)}
-\author{}
+
+\author{Tobias Knöppler (6523815), Nico Tress (6378086)}
 \date{\gertoday}
 \begin{document}
 \maketitle
 
 \section{}
-\textbf{I) Induktionsanfang:}\
-\emph{Behauptung:} $(\exists n)$\\
-\emph{Beweis:} \\\\
-\textbf{II) Induktionsschritt:}\\
-\emph{Induktionsvorraussetzung (IV):} $(\forall n)$\\
-\emph{Beweis:}
+\subsection{}%subsection name}\label{label}
 
+\begin{enumerate}[i)]
+\item 
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
 
+  \node[elem] (0) {5};
+\end{tikzpicture}
 
+\item 
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+
+  \node[elem] (n0) {5};
+  \node[elem] (n1)
+    [below right=5mm and 5mm of n0.south] 
+    {8} 
+    edge (n0);
+\end{tikzpicture}
+
+\item
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+
+  \node[elem] (n0) {5};
+  \node[elem] (n1)
+    [below right=5mm and 5mm of n0.south] 
+    {8} 
+    edge (n0);
+  \node[elem] (n2)
+    [below right=5mm and 5mm of n1.south]
+    {9}
+    edge (n1);
+\end{tikzpicture}
+
+\item
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+
+  \node[elem] (n0) {5};
+  \node[elem] (n1)
+    [below right=5mm and 5mm of n0.south] 
+    {8} 
+    edge (n0);
+  \node[elem] (n2)
+    [below right=5mm and 5mm of n1.south]
+    {9}
+    edge (n1);
+  \node[elem] (n3)
+    [below left=5mm and 5mm of n1.south]
+    {6}
+    edge (n1);
+\end{tikzpicture}
+
+\item
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+
+  \node[elem] (n0) {5};
+  \node[elem] (n1)
+    [below right=5mm and 5mm of n0.south] 
+    {8} 
+    edge (n0);
+  \node[elem] (n2)
+    [below right=5mm and 5mm of n1.south]
+    {9}
+    edge (n1);
+  \node[elem] (n3)
+    [below left=5mm and 5mm of n1.south]
+    {6}
+    edge (n1);
+  \node[elem] (n4)
+    [below right=5mm and 5mm of n3.south]
+    {7}
+    edge (n3);
+\end{tikzpicture}
+\end{enumerate}
+
+\subsection{}%subsection name}\label{label}
+\begin{enumerate}[i)]
+\item
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+  \node[elem] (n0)
+    {20};
+  \node[elem] (n1)
+    [below left=5mm and 15mm of n0.south]
+    {10}
+    edge (n0);
+  \node[elem] (n2)
+    [below right=5mm and 15mm of n0.south]
+    {25}
+    edge (n0);
+  \node[elem] (n3)
+    [below left=5mm and 5mm of n1.south]
+    {7}
+    edge (n1);
+  %\node[elem] (n4)
+  %  [below right=5mm and 5mm of n1.south]
+  %  {14}
+  %  edge (n1);
+  \node[elem] (n5)
+    [below left=5mm and 5mm of n2.south]
+    {22}
+    edge (n2);
+  \node[elem] (n6)
+    [below right=5mm and 5mm of n2.south]
+    {27}
+    edge (n2);
+  \node[elem] (n7)
+    [below left=5mm and 5mm of n5.south]
+    {21}
+    edge (n5);
+  \node[elem] (n8)
+    [below right=5mm and 5mm of n5.south]
+    {24}
+    edge (n5);
+  \node[elem] (n9)
+    [below right=5mm and 5mm of n6.south]
+    {29}
+    edge (n6);
+  \node[elem] (n10)
+    [below left=5mm and 5mm of n9.south]
+    {28}
+    edge (n9);
+  \node[elem] (n11)
+    [below right=5mm and 5mm of n9.south]
+    {31}
+    edge (n9);
+\end{tikzpicture}
+
+\item
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+  \node[elem] (n0)
+    {20};
+  \node[elem] (n1)
+    [below left=5mm and 15mm of n0.south]
+    {10}
+    edge (n0);
+  \node[elem] (n2)
+    [below right=5mm and 15mm of n0.south]
+    {25}
+    edge (n0);
+  \node[elem] (n3)
+    [below left=5mm and 5mm of n1.south]
+    {7}
+    edge (n1);
+  %\node[elem] (n4)
+  %  [below right=5mm and 5mm of n1.south]
+  %  {14}
+  %  edge (n1);
+  \node[elem] (n5)
+    [below left=5mm and 5mm of n2.south]
+    {22}
+    edge (n2);
+  %\node[elem] (n6)
+  %  [below right=5mm and 5mm of n2.south]
+  %  {27}
+  %  edge (n2);
+  \node[elem] (n7)
+    [below left=5mm and 1mm of n5.south]
+    {21}
+    edge (n5);
+  \node[elem] (n8)
+    [below right=5mm and 1mm of n5.south]
+    {24}
+    edge (n5);
+  \node[elem] (n9)
+    [below right=5mm and 5mm of n2.south]
+    {29}
+    edge (n2);
+  \node[elem] (n10)
+    [below left=5mm and 1mm of n9.south]
+    {28}
+    edge (n9);
+  \node[elem] (n11)
+    [below right=5mm and 1mm of n9.south]
+    {31}
+    edge (n9);
+\end{tikzpicture}
+
+\item
+\begin{tikzpicture}[<-]
+  \tikzstyle{elem} = [rectangle, draw]
+  \node[elem] (n0)
+    {20};
+  \node[elem] (n1)
+    [below left=5mm and 15mm of n0.south]
+    {10}
+    edge (n0);
+  \node[elem] (n2)
+    [below right=5mm and 15mm of n0.south]
+    {24}
+    edge (n0);
+  \node[elem] (n3)
+    [below left=5mm and 5mm of n1.south]
+    {7}
+    edge (n1);
+  %\node[elem] (n4)
+  %  [below right=5mm and 5mm of n1.south]
+  %  {14}
+  %  edge (n1);
+  \node[elem] (n5)
+    [below left=5mm and 5mm of n2.south]
+    {22}
+    edge (n2);
+  %\node[elem] (n6)
+  %  [below right=5mm and 5mm of n2.south]
+  %  {27}
+  %  edge (n2);
+  \node[elem] (n7)
+    [below left=5mm and 1mm of n5.south]
+    {21}
+    edge (n5);
+  %\node[elem] (n8)
+  %  [below right=5mm and 1mm of n5.south]
+  %  {24}
+  %  edge (n5);
+  \node[elem] (n9)
+    [below right=5mm and 5mm of n2.south]
+    {29}
+    edge (n2);
+  \node[elem] (n10)
+    [below left=5mm and 1mm of n9.south]
+    {28}
+    edge (n9);
+  \node[elem] (n11)
+    [below right=5mm and 1mm of n9.south]
+    {31}
+    edge (n9);
+\end{tikzpicture}
+\end{enumerate}
+
+\section{}%section name}\label{label}
+\subsection{}%subsection name}\label{label}
+\begin{lstlisting}
+InorderTreeWalk(x)
+  for each sibling n of x
+    n.color = white
+  
+  while x.color == white or right[x].color == white
+    if left[x] != nil and left[x].color == white
+      x = left[x]
+    else
+      if x.color == white
+        print key[x]
+        x.color = black
+      if right[x] != nil and right[x].color == white
+        x = right[x]
+\end{lstlisting}
+\subsection{}%subsection name}\label{label}
+
+\begin{lstlisting}
+TreeMinimum(x)
+  if links[x] == nil
+    return x
+  else
+    return TreeMinimum(left[x])
+\end{lstlisting}
+
+\section{}%section name}\label{label}
+\begin{enumerate}[I]
+  \item Ein Pfad hat maximal die Länge $n-1$, wobei n die Anzahl Knoten ist, die er durchläuft.
+  \item Wenn es in einem Graphen G zwei Knoten s und t gibt, die durch einen oder mehrere  Pfade verbunden sind, so gibt es genau dann einen Knoten v, bei dessen Entfernung alle Pfade von s nach t unterbrochen würden, wenn all diese Pfade v enthalten.
+  \item Angenommen, G sei ein Graph mit n Knoten. s und t seien 2 Knoten in G, zweischen denen es 2 Pfade p, q mit $|p|,|q| > \frac{n}{2}$ gibt, die außer s und t keine Knoten gemeinsam haben. Dann enthält der kleinere Pfad von p und q außer s und t maximal $\frac{n}{2}$, also $\frac{n - 2}{2} + 2$ Knoten (nämlich dann, wenn p und q jeweils genau die Hälfte der übrigen Knoten enthalten) und hat wegen $I$ damit eine maximale Länge von $\frac{n - 2}{2} + 1 = \frac{n}{2}$.\\
+  Damit ist die Annahme, dass $|p|,|q| > \frac{n}{2}$ zum Widerspruch geführt und bewiesen, dass zwei Pfade, die s und t verbinden und länger als $\frac{n}{2}$ sind, mindestens einen Knoten gemeinsam haben müssen.
+  \item Aus $II$ und $III$ folgt, dass es in einem Graphen mit n Knoten, der zwei Knoten s und t enthält, deren Distanz $> \frac{n}{2}$ ist, einen Knoten v geben muss, der allen Pfaden zweischen s und t gemein ist, wodurch durch Löschen von v alle Pfade zwischen s und t zerstört werden. $\square$
+\end{enumerate}
+
+\section{}%section name}\label{label}
+\begin{lstlisting}
+FindV(s, t, V)
+  for each n in V
+    n.counter = 0
+    n.color = white
+  s.color = black
+  
+  for each n in adjacents(s)
+    CheckPath(n, t)
+    
+  v = random node in V
+  for each n in V
+    if v.counter < n.counter
+      v = n
+  
+  return v
+  
+  
+CheckPath(n, t)
+  
+  if n == t
+    return 1
+
+  n.color = grey
+  for each m in adjacents(n)
+    if m.color == white 
+      paths = CheckPath(m, t)
+      n.counter = n.counter + paths
+    else if m.color == black and m.counter > 0
+      n.counter = n.counter + m.counter
+  m.color = black
+  
+  return n.counter
+  
+\end{lstlisting}
+
+FindV durchläuft die Knoten in G in einer Tiefensuche, ausgehend von den angrenzenden Knoten von s. Dabei wird für jeden Knoten überprüft, ob von diesem ein oder mehrere Pfade zu t führen; falls dies der Fall ist, so wird der Counter des aktuellen Knotens um 1 für jeden gefundenen Pfad zu t erhöht (Z. 26-27). \\
+Stößt der Algorithmus dabei auf einen bereits markierten Knoten, so addiert er die Anzahl der Pfade zu t, von diesem Knoten zu dem eigenen Counter (Z. 28-29).\\
+Am Ende erhalten so alle von s erreichbaren Knoten einen counter, der den Pfaden von s zu t über diesen Knoten entspricht. Nun genügt es den Knoten mit dem höchsten counter zu finden und zurückzugeben (Z. 15) - haben mehrere Knoten den höchsten counter, so ist ein beliebiger davon gültig.
 \end{document}
