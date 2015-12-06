@@ -447,17 +447,28 @@ CheckPath(n, t)
   n.color = grey
   for each m in adjacents(n)
     if m.color == white 
-      paths = CheckPath(m, t)
-      n.counter = n.counter + paths
-    else if m.color == black and m.counter > 0
-      n.counter = n.counter + m.counter
-  m.color = black
+      number_of_paths = CheckPath(m, t)
+      n.counter = n.counter + number_of_paths
+  m.color = white
   
   return n.counter
   
 \end{lstlisting}
 
 FindV durchläuft die Knoten in G in einer Tiefensuche, ausgehend von den angrenzenden Knoten von s. Dabei wird für jeden Knoten überprüft, ob von diesem ein oder mehrere Pfade zu t führen; falls dies der Fall ist, so wird der Counter des aktuellen Knotens um 1 für jeden gefundenen Pfad zu t erhöht (Z. 26-27). \\
-Stößt der Algorithmus dabei auf einen bereits markierten Knoten, so addiert er die Anzahl der Pfade zu t, von diesem Knoten zu dem eigenen Counter (Z. 28-29).\\
-Am Ende erhalten so alle von s erreichbaren Knoten einen counter, der den Pfaden von s zu t über diesen Knoten entspricht. Nun genügt es den Knoten mit dem höchsten counter zu finden und zurückzugeben (Z. 15) - haben mehrere Knoten den höchsten counter, so ist ein beliebiger davon gültig.
+Dabei wird entgegen einer üblichen Tiefensuche ein bereits besuchter Knoten nicht als besucht markiert, sondern nachdem alle von diesem Knoten ausgehenden Pfade untersucht wurden, wird er wieder weiß markiert. Das hat zur Folge, dass, sollte ein weiterer Pfad zu dem knoten hinführen, dessen Counter ein weiteres Mal um die Anzahl der Pfade, die von diesem Knoten zu t führen erhöht wird.\\
+Die endgültige Zahl von v.counter entspricht also der Zahl der Pfade, die von s zu v führen multipliziert mit der Anzahl der Pfade, die von v zu t führen. Insgesamt ist dies die Anzahl der Pfade von s nach t, auf denen v liegt.\\
+Damit ist es dann nur noch notwendig, den Knoten mit dem höchsten Counter zu finden; dieser liegt auf den meisten Pfaden von s nach t und wie weiter oben gezeigt, müssen dies alle Pfade von s nach t sein, sofern die Distanz von s zu t größer ist als $\frac{n}{2}$.\\
+Sollte es mehrere Knoten mit demselben (höchsten) Counter geben, so liegen diese alle auf allen Pfaden von s nach t und es ist irrelevant, welchen davon man wählt.\\
+
+\section{}%section name}\label{label}
+\subsection{}%subsection name}\label{label}
+
+Das Problem Big-Clique lässt sich auf 2CNF reduzieren, indem man analog zur Reduktion von Clique auf 3CNF aus einer aussagenlogischen Formel F in konjunktiver Normalform, die jeweils 2 Literale pro Klausel enthält, einen Graphen G konstruiert.\\
+Dabei geht man folgendermaßen vor: für jedes Symbol in F füge man einen Knoten zu G hinzu. Nun verbinde man alle Knoten, die nicht in derselben Klausel stehen und denen nicht einander ausschließende Literale zugeordnet sind (z.B. $\neg x$ und $x$).\\
+Die Anzahl der Klauseln entspricht exakt $\frac{n}{2}$, da jede Klausel zwei Literale enthält.\\
+Dann gibt es genau dann eine $\frac{n}{2}$-Clique in G, wenn F erfüllbar ist. Die wahr gemachten Literale entsprechen den Knoten in der Clique. Dies gilt wegen des Konstruktionsverfahrens für G aus F: Weil nur solche Knoten verbunden sind, deren Symbole sich nicht gegenseitig ausschließen, ist es \textit{möglich}, alle Symbole von durch Kanten verbundenen Knoten wahr zu machen. Da nur Knoten verbunden sind, deren Symbole nicht in derselben Klausel stehen, ist die CNF automatisch erfüllt, wenn man alle zu den Knoten einer $\frac{n}{2}$-Clique gehörigen Symbole wahr macht.\\
+Da es auf die beschriebene Weise möglich ist, Big-Clique in Polynomialzeit auf 2CNF zu reduzieren, ist Big-Clique in NPC, da auch 2CNF in NPC ist.
+
+
 \end{document}
